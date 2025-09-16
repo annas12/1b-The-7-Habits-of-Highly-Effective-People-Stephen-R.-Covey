@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 7 Habits - Interactive Summary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .text-fluid { font-size: clamp(1rem, 2.5vw, 1.125rem); }
+        .title-fluid { font-size: clamp(1.5rem, 4vw, 2.25rem); }
+        .subtitle-fluid { font-size: clamp(1.125rem, 3vw, 1.5rem); }
+        .dark-mode { background: #1a1a1a; color: #e5e5e5; }
+        .dark-mode .bg-white { background: #2d2d2d !important; }
+        .dark-mode .text-gray-800 { color: #e5e5e5 !important; }
+        .dark-mode .text-gray-600 { color: #a0a0a0 !important; }
+        .dark-mode .text-gray-700 { color: #d0d0d0 !important; }
+        .dark-mode .text-gray-500 { color: #9ca3af !important; }
+        .dark-mode .border-gray-200 { border-color: #404040 !important; }
+        .dark-mode nav { background: #2d2d2d !important; border-color: #404040 !important; }
+        .dark-mode .hover\:bg-purple-50:hover { background: #3d2d4d !important; }
+        .dark-mode .hover\:bg-gray-50:hover { background: #3a3a3a !important; }
+        .dark-mode .hover\:bg-gray-100:hover { background: #404040 !important; }
+        .dark-mode #navigationDrawer { background: #2d2d2d !important; }
+        .dark-mode #navigationDrawer .bg-purple-100 { background: #4c1d95 !important; }
+        .dark-mode #navigationDrawer .text-purple-600 { color: #a855f7 !important; }
+    </style>
+</head>
+<body class="bg-gray-50 transition-colors duration-300">
+    <!-- Navigation Drawer Overlay -->
+    <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300" onclick="closeDrawer()"></div>
+    
+    <!-- Navigation Drawer -->
+    <div id="navigationDrawer" class="fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="p-6">
+            <!-- Drawer Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                        <span class="text-xl font-bold text-purple-600">7H</span>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-lg text-gray-800">The 7 Habits</h2>
+                        <p class="text-sm text-gray-500">Stephen R. Covey</p>
+                    </div>
+                </div>
+                <button onclick="closeDrawer()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <span class="text-xl text-gray-600">✕</span>
+                </button>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="space-y-2">
+                <button onclick="navigateFromDrawer('home')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">🏠</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">Home</span>
+                </button>
+                <button onclick="navigateFromDrawer('contents')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">📚</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">Table of Contents</span>
+                </button>
+                <button onclick="navigateFromDrawer('habits')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">⭐</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">7 Habits</span>
+                </button>
+                <button onclick="navigateFromDrawer('notes')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">📝</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">My Notes</span>
+                </button>
+                <button onclick="navigateFromDrawer('conclusion')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">🎯</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">Conclusion</span>
+                </button>
+            </nav>
+            
+            <!-- Dark Mode Toggle in Drawer -->
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <button id="drawerDarkModeToggle" class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <span class="text-2xl">🌙</span>
+                    <span class="font-medium text-gray-700">Dark Mode</span>
+                    <div class="ml-auto">
+                        <div class="w-12 h-6 bg-gray-300 rounded-full relative transition-colors duration-300" id="drawerToggleTrack">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform duration-300" id="drawerToggleThumb"></div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6 px-4 sticky top-0 z-30 shadow-lg">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-center">
+                <!-- Hamburger Menu Button -->
+                <button onclick="openDrawer()" class="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
+                    <span class="text-xl">☰</span>
+                </button>
+                
+                <!-- Center Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <span class="text-xl font-bold">7H</span>
+                    </div>
+                    <h1 class="font-bold text-lg md:text-xl">The 7 Habits</h1>
+                </div>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="headerDarkModeToggle" class="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
+                    <span class="text-lg">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-4">
+        <!-- Quote of the Day -->
+        <div id="dailyQuote" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-xl mb-8 shadow-lg">
+            <div class="flex items-start space-x-4">
+                <span class="text-3xl">💡</span>
+                <div>
+                    <p class="text-base font-medium mb-2" id="quoteText"></p>
+                    <p class="text-purple-100 text-sm">- Stephen R. Covey</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Section -->
+        <section id="homeSection" class="section">
+            <div class="text-center mb-12">
+                <h1 class="title-fluid font-bold text-gray-800 mb-4">The 7 Habits of Highly Effective People</h1>
+                <p class="subtitle-fluid text-purple-600 font-semibold mb-2">Stephen R. Covey</p>
+                <p class="text-fluid text-gray-600 max-w-2xl mx-auto">Smart Summary, Easy to Understand, Ready to Practice</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover text-center">
+                    <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">🎯</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Core Principles</h3>
+                    <p class="text-gray-600 text-sm text-justify">Learn the 7 fundamental habits that transform your mindset and actions</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover text-center">
+                    <div class="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">🚀</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Practical Steps</h3>
+                    <p class="text-gray-600 text-sm text-justify">Every concept comes with concrete tips you can implement immediately</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover md:col-span-2 lg:col-span-1 text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">📈</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Personal Transformation</h3>
+                    <p class="text-gray-600 text-sm text-justify">Build character and leadership from within toward true effectiveness</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="showSection('contents')" class="bg-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-purple-700 transition-colors shadow-lg">
+                    Start Learning 🚀
+                </button>
+            </div>
+        </section>
+
+        <!-- Contents Section -->
+        <section id="contentsSection" class="section hidden">
+            <h2 class="subtitle-fluid font-bold text-gray-800 mb-8 text-center">📚 Table of Contents</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-purple-600 mb-4">🏗️ Paradigms & Principles</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
+                            <span class="text-gray-700">The Power of Paradigms</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
+                            <span class="text-gray-700">Fundamental Principles</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
+                            <span class="text-gray-700">Character vs Personality Ethics</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-blue-600 mb-4">🎯 Private Victory</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
+                            <span class="text-gray-700">Habit 1: Be Proactive</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
+                            <span class="text-gray-700">Habit 2: Begin with the End in Mind</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
+                            <span class="text-gray-700">Habit 3: Put First Things First</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-green-600 mb-4">🤝 Public Victory</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                            <span class="text-gray-700">Habit 4: Think Win-Win</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                            <span class="text-gray-700">Habit 5: Seek First to Understand</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                            <span class="text-gray-700">Habit 6: Synergize</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-orange-600 mb-4">🔄 Renewal</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
+                            <span class="text-gray-700">Habit 7: Sharpen the Saw</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
+                            <span class="text-gray-700">Continuous Renewal</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
+                            <span class="text-gray-700">Upward Spiral of Growth</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button onclick="showSection('habits')" class="bg-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-purple-700 transition-colors shadow-lg">
+                    Explore 7 Habits ⭐
+                </button>
+            </div>
+        </section>
+
+        <!-- Habits Overview Section -->
+        <section id="habitsSection" class="section hidden">
+            <h2 class="subtitle-fluid font-bold text-gray-800 mb-8 text-center">⭐ The 7 Habits of Highly Effective People</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Habit cards will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Individual Habit Sections -->
+        <section id="habit1Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(7)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 7</button>
+                        <button onclick="showHabit(2)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 2 →</button>
+                    </div>
+                </div>
+                <div id="habit1Content"></div>
+            </div>
+        </section>
+
+        <section id="habit2Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(1)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 1</button>
+                        <button onclick="showHabit(3)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 3 →</button>
+                    </div>
+                </div>
+                <div id="habit2Content"></div>
+            </div>
+        </section>
+
+        <section id="habit3Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(2)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 2</button>
+                        <button onclick="showHabit(4)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 4 →</button>
+                    </div>
+                </div>
+                <div id="habit3Content"></div>
+            </div>
+        </section>
+
+        <section id="habit4Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(3)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 3</button>
+                        <button onclick="showHabit(5)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 5 →</button>
+                    </div>
+                </div>
+                <div id="habit4Content"></div>
+            </div>
+        </section>
+
+        <section id="habit5Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(4)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 4</button>
+                        <button onclick="showHabit(6)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 6 →</button>
+                    </div>
+                </div>
+                <div id="habit5Content"></div>
+            </div>
+        </section>
+
+        <section id="habit6Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(5)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 5</button>
+                        <button onclick="showHabit(7)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 7 →</button>
+                    </div>
+                </div>
+                <div id="habit6Content"></div>
+            </div>
+        </section>
+
+        <section id="habit7Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(6)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 6</button>
+                        <button onclick="showHabit(1)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 1 →</button>
+                    </div>
+                </div>
+                <div id="habit7Content"></div>
+            </div>
+        </section>
+
+        <!-- Notes Section -->
+        <section id="notesSection" class="section hidden">
+            <h2 class="subtitle-fluid font-bold text-gray-800 mb-8 text-center">📝 My Notes & Progress</h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-purple-600 mb-6 text-center">✅ Action Plan Checklist</h3>
+                        <div id="checklistContainer" class="space-y-4">
+                            <!-- Checklist items will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-6 text-center">📖 Personal Notes</h3>
+                        <textarea id="personalNotes" placeholder="Write your reflections, insights, or implementation plans here..." 
+                                  class="w-full h-48 p-4 border border-gray-200 rounded-lg resize-none focus:ring-2 focus:ring-purple-500 focus:border-transparent leading-relaxed"></textarea>
+                        <div class="text-center mt-6">
+                            <button onclick="saveNotes()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                                💾 Save Notes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-gradient-to-r from-green-500 to-teal-500 text-white p-8 rounded-xl max-w-4xl mx-auto">
+                    <h3 class="text-xl font-semibold mb-6 text-center">🎯 Progress Tracker</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold mb-2" id="completedHabits">0</div>
+                            <div class="text-sm opacity-90">Habits Studied</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold mb-2" id="completedActions">0</div>
+                            <div class="text-sm opacity-90">Action Items Completed</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold mb-2" id="progressPercentage">0%</div>
+                            <div class="text-sm opacity-90">Total Progress</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section id="conclusionSection" class="section hidden">
+            <h2 class="subtitle-fluid font-bold text-gray-800 mb-8 text-center">🎯 Conclusion & Next Steps</h2>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg mb-8 max-w-4xl mx-auto">
+                <h3 class="text-xl font-semibold text-purple-600 mb-6 text-center">🌟 Core Message</h3>
+                <div class="space-y-6 text-gray-700">
+                    <p class="text-justify leading-relaxed">The 7 Habits teaches us that <strong>true effectiveness</strong> begins from within - from the character, principles, and paradigms we embrace.</p>
+                    <p class="text-justify leading-relaxed">These seven habits form a <strong>holistic system</strong> that supports each other:</p>
+                    <ul class="space-y-3 max-w-3xl mx-auto">
+                        <li class="flex items-start space-x-3"><span class="text-purple-500 mt-1">•</span><span class="leading-relaxed"><strong>Private Victory</strong> (Habits 1-3): Building character foundation and self-discipline</span></li>
+                        <li class="flex items-start space-x-3"><span class="text-purple-500 mt-1">•</span><span class="leading-relaxed"><strong>Public Victory</strong> (Habits 4-6): Developing interpersonal and leadership skills</span></li>
+                        <li class="flex items-start space-x-3"><span class="text-purple-500 mt-1">•</span><span class="leading-relaxed"><strong>Renewal</strong> (Habit 7): Maintaining and improving capacity continuously</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-gradient-to-br from-blue-500 to-purple-600 text-white p-6 rounded-xl">
+                    <h3 class="text-lg font-semibold mb-4">🚀 Start Now</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Choose 1 habit to focus on for 30 days</li>
+                        <li>• Create specific and measurable daily plans</li>
+                        <li>• Evaluate progress weekly</li>
+                        <li>• Celebrate small wins as motivation</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-500 to-teal-600 text-white p-6 rounded-xl">
+                    <h3 class="text-lg font-semibold mb-4">💡 Always Remember</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Change begins with paradigms, not techniques</li>
+                        <li>• Small consistency beats big efforts occasionally</li>
+                        <li>• Focus on circle of influence, not circle of concern</li>
+                        <li>• Investment in yourself is the best investment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white p-8 rounded-xl">
+                <h3 class="text-xl font-bold mb-4">🎯 Your Commitment</h3>
+                <p class="mb-6">Effectiveness is a journey, not a destination. Start today, choose one habit, and commit to developing it consistently.</p>
+                <button onclick="showSection('notes')" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    📝 Create Action Plan
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Data for the 7 Habits
+        const habitsData = [
+            {
+                id: 1,
+                title: "Be Proactive",
+                subtitle: "Take Initiative and Responsibility",
+                icon: "🎯",
+                concept: "Take initiative and full responsibility for your life, focusing on things you can control.",
+                detail: "This habit distinguishes between reactive people (who react to circumstances) and proactive people (who take initiative). Proactive people focus on their 'Circle of Influence' - things they can change, not their 'Circle of Concern' - things they can only worry about. This is the foundation of all other habits because without proactivity, we cannot develop any habit.",
+                example: "Example: Instead of complaining about daily traffic jams, you choose to leave earlier, find alternative routes, or use travel time to listen to audiobooks. Or when facing criticism, instead of being defensive, you ask 'What can I learn from this?'",
+                tips: [
+                    "Replace reactive language ('I have to', 'If only') with proactive language ('I choose', 'I will')",
+                    "Make small commitments and keep them - start with simple things like waking up 15 minutes earlier",
+                    "When facing problems, ask: 'What can I do about this situation?'",
+                    "Focus energy on solutions, not on problems or blaming others"
+                ],
+                insight: "Between stimulus and response there is a space. In that space is our power to choose our response. In our response lies our growth and our freedom."
+            },
+            {
+                id: 2,
+                title: "Begin with the End in Mind",
+                subtitle: "Have a Clear Vision of Your Purpose",
+                icon: "🎪",
+                concept: "Have a clear vision of your life's purpose and values you want to realize before starting any action.",
+                detail: "This habit is about personal leadership - the ability to visualize and plan the desired future. Covey uses the analogy of 'two creations': first in the mind (mental creation), second in reality (physical creation). Without a clear vision, we're like climbing a ladder leaning against the wrong wall - efficient but not effective.",
+                example: "Example: Before starting your career, you write a personal mission statement describing the values and contributions you want to make. Or in work projects, you start by defining the desired end result, then plan the steps. Even in difficult conversations, you visualize the positive outcome you hope for.",
+                tips: [
+                    "Write a personal mission statement - who you are and what you want to achieve in life",
+                    "Visualize yourself 10 years from now - what does your ideal life look like?",
+                    "For every project or task, define what 'done' looks like first",
+                    "Review and revise your goals regularly - at least every 6 months"
+                ],
+                insight: "All things are created twice. First in the mind, then in reality. If you don't develop self-awareness and become responsible for first creations, you empower other people and circumstances to shape much of your life."
+            },
+            {
+                id: 3,
+                title: "Put First Things First",
+                subtitle: "Prioritize Based on Importance",
+                icon: "⚖️",
+                concept: "Manage time and energy based on priorities aligned with your values and long-term goals.",
+                detail: "This is the habit of self-management and discipline. Covey introduces the Time Management Matrix with 4 quadrants: Important & Urgent (Crisis), Important & Not Urgent (Prevention/Development), Not Important & Urgent (Interruptions), Not Important & Not Urgent (Waste). Effective people spend most time in Quadrant II - important but not urgent things.",
+                example: "Example: Instead of always being in 'firefighting' mode, you allocate time for planning, learning, exercise, and building relationships. For instance, setting aside 1 hour weekly for planning, 30 minutes daily for reading, or regular family check-ins even when there are no urgent issues.",
+                tips: [
+                    "Identify 3 main priorities each day and work on the most important first",
+                    "Block time for Quadrant II activities (important but not urgent) in your calendar",
+                    "Learn to say 'no' to things that don't align with your priorities",
+                    "Weekly review: evaluate if your time aligns with your values"
+                ],
+                insight: "The key is not to prioritize what's on your schedule, but to schedule your priorities. Management is efficiency in climbing the ladder of success; leadership determines whether the ladder is leaning against the right wall."
+            },
+            {
+                id: 4,
+                title: "Think Win-Win",
+                subtitle: "Seek Mutual Benefit",
+                icon: "🤝",
+                concept: "Seek solutions that benefit all parties in every interaction, based on abundance not scarcity.",
+                detail: "This habit shifts paradigm from competition to collaboration. Win-Win is not a technique, but a life philosophy rooted in character with integrity, maturity, and abundance mentality. There are 6 paradigms of human interaction: Win-Win, Win-Lose, Lose-Win, Lose-Lose, Win, and Win-Win or No Deal. Win-Win is the only one sustainable long-term.",
+                example: "Example: In salary negotiations, instead of just focusing on numbers, you look for ways to provide more value to the company while getting fair compensation. Or in conflicts with colleagues, you seek solutions that meet both parties' needs, not just winning the argument.",
+                tips: [
+                    "In every conflict, ask: 'How can we both win?'",
+                    "Listen to others' needs and interests before presenting yours",
+                    "Focus on mutual interests, not opposing positions",
+                    "Develop abundance mentality - believe there's enough success for everyone"
+                ],
+                insight: "Win-Win is a belief that there is plenty for everyone. It's not a technique; it's a total philosophy of human interaction. Win-Win means agreements or solutions are mutually beneficial and satisfying."
+            },
+            {
+                id: 5,
+                title: "Seek First to Understand, Then to Be Understood",
+                subtitle: "Listen with Empathy",
+                icon: "👂",
+                concept: "Listen empathetically to truly understand others' perspectives before trying to convey your own views.",
+                detail: "This is the most powerful communication habit. Most people listen with the intent to reply, not to understand. Empathic listening is listening with ears, eyes, and heart. When people feel understood, they become more open to understanding you. This creates an atmosphere of trust and cooperation.",
+                example: "Example: When your teenager is angry, instead of immediately giving advice or scolding, you listen empathetically: 'It sounds like you're really frustrated with this situation. Tell me more.' Or in meetings, before presenting ideas, you ask about the team's concerns and priorities first.",
+                tips: [
+                    "Practice listening without preparing answers in your mind",
+                    "Use 'mirroring' technique - repeat what you heard for confirmation",
+                    "Pay attention to body language and emotions, not just words",
+                    "Ask open questions to understand deeper: 'How do you feel about...?'"
+                ],
+                insight: "If I were to summarize in one sentence the single most important principle I have learned in the field of interpersonal relations, it would be this: Seek first to understand, then to be understood."
+            },
+            {
+                id: 6,
+                title: "Synergize",
+                subtitle: "Create Creative Cooperation",
+                icon: "🌟",
+                concept: "Combine different strengths and perspectives to create solutions better than what could be achieved individually.",
+                detail: "Synergy is the essence of principle-centered leadership. It's about valuing differences and using them as strengths. When people with different backgrounds, expertise, and perspectives work together with mutual respect, the results can far exceed the sum of their individual contributions. 1+1 can become 3, 10, or even 100.",
+                example: "Example: A team with members from various departments (marketing, engineering, finance) works together to develop a new product. Instead of each defending their department's perspective, they combine insights to create innovative solutions not previously thought of. Or in families, combining different parenting styles for a more holistic approach.",
+                tips: [
+                    "Actively seek perspectives different from yours in every project",
+                    "When there are disagreements, say: 'You see something I don't. Help me understand.'",
+                    "Create safe environments for sharing 'crazy' or unconventional ideas",
+                    "Focus on each team member's strengths and how to combine them"
+                ],
+                insight: "Synergy is the highest activity of life - the true test and manifestation of all the other habits put together. When properly understood, it becomes the most empowering activity in which a person can engage."
+            },
+            {
+                id: 7,
+                title: "Sharpen the Saw",
+                subtitle: "Continuous Self-Renewal",
+                icon: "🔄",
+                concept: "Consistently renew and improve your capabilities in four dimensions: physical, mental, spiritual, and social-emotional.",
+                detail: "This habit is about continuous renewal and improving personal capacity. Covey uses the analogy of a woodcutter too busy cutting to stop and sharpen his saw. Four dimensions to sharpen: Physical (exercise, nutrition, rest), Mental (reading, writing, learning), Spiritual (meditation, reflection, connection with values), and Social-Emotional (building relationships, empathy, service).",
+                example: "Example: Daily routine including 30 minutes exercise (physical), 20 minutes reading non-fiction (mental), 10 minutes meditation or reflection (spiritual), and quality time with family or friends (social-emotional). Or taking online courses for new skills, joining communities aligned with your values, and maintaining health with balanced diet.",
+                tips: [
+                    "Create daily routine covering all four dimensions, even just 10-15 minutes each",
+                    "Invest at least 1 hour daily for self-development",
+                    "Set monthly learning targets - new book, skill, or experience",
+                    "Evaluate and adjust your renewal program monthly"
+                ],
+                insight: "Sharpen the Saw means preserving and enhancing the greatest asset you have - you. It means having a balanced program for self-renewal in the four areas of your life."
+            }
+        ];
+
+        // Inspirational quotes
+        const quotes = [
+            "Sow a thought, reap an action; sow an action, reap a habit; sow a habit, reap a character; sow a character, reap a destiny.",
+            "The key is not to prioritize what's on your schedule, but to schedule your priorities.",
+            "Most people do not listen with the intent to understand; they listen with the intent to reply.",
+            "Strength lies in differences, not in similarities.",
+            "Live out of your imagination, not your history.",
+            "Trust is the glue of life. It's the most essential ingredient in effective communication.",
+            "The way we see the problem is the problem.",
+            "Begin with the end in mind.",
+            "Seek first to understand, then to be understood.",
+            "Synergy is better than my way or your way. It's our way."
+        ];
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRandomQuote();
+            loadHabits();
+            loadChecklist();
+            loadNotes();
+            updateProgress();
+            
+            // Set active navigation
+            setActiveNav('home');
+        });
+
+        // Navigation functions
+        function showSection(sectionName) {
+            // Scroll to top immediately
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+            
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + 'Section').classList.remove('hidden');
+            
+            // Show/hide daily quote based on section
+            const dailyQuote = document.getElementById('dailyQuote');
+            if (sectionName === 'home') {
+                dailyQuote.classList.remove('hidden');
+            } else {
+                dailyQuote.classList.add('hidden');
+            }
+            
+            // Update navigation
+            setActiveNav(sectionName);
+            
+            // Ensure scroll is at top after DOM updates
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'instant'
+                });
+            }, 10);
+        }
+
+        function setActiveNav(activeSection) {
+            // Update navigation button states
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-white/40');
+                btn.classList.add('bg-white/20');
+            });
+            
+            // Set active button
+            const activeBtn = document.querySelector(`button[onclick="showSection('${activeSection}')"]`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white/20');
+                activeBtn.classList.add('bg-white/40');
+            }
+        }
+
+        // Drawer functions
+        function openDrawer() {
+            const drawer = document.getElementById('navigationDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            
+            overlay.classList.remove('hidden');
+            drawer.classList.remove('-translate-x-full');
+            
+            // Prevent body scroll when drawer is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            const drawer = document.getElementById('navigationDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+
+        function navigateFromDrawer(sectionName) {
+            closeDrawer();
+            setTimeout(() => {
+                showSection(sectionName);
+            }, 300); // Wait for drawer close animation
+        }
+
+        // Dark mode toggle functions
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            
+            // Update header toggle
+            const headerToggle = document.getElementById('headerDarkModeToggle');
+            headerToggle.innerHTML = isDark ? '<span class="text-lg">☀️</span>' : '<span class="text-lg">🌙</span>';
+            
+            // Update drawer toggle
+            const drawerToggle = document.getElementById('drawerDarkModeToggle');
+            const toggleTrack = document.getElementById('drawerToggleTrack');
+            const toggleThumb = document.getElementById('drawerToggleThumb');
+            
+            if (isDark) {
+                drawerToggle.querySelector('span').textContent = '☀️';
+                toggleTrack.classList.add('bg-purple-600');
+                toggleTrack.classList.remove('bg-gray-300');
+                toggleThumb.classList.add('translate-x-6');
+            } else {
+                drawerToggle.querySelector('span').textContent = '🌙';
+                toggleTrack.classList.remove('bg-purple-600');
+                toggleTrack.classList.add('bg-gray-300');
+                toggleThumb.classList.remove('translate-x-6');
+            }
+            
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        // Dark mode toggle event listeners
+        document.getElementById('headerDarkModeToggle').addEventListener('click', toggleDarkMode);
+        document.getElementById('drawerDarkModeToggle').addEventListener('click', toggleDarkMode);
+
+        // Close drawer when clicking outside or pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDrawer();
+            }
+        });
+
+        // Load random quote
+        function loadRandomQuote() {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quoteText').textContent = randomQuote;
+        }
+
+        // Load habits overview
+        function loadHabits() {
+            const container = document.querySelector('#habitsSection .grid');
+            container.innerHTML = '';
+            
+            habitsData.forEach(habit => {
+                const habitCard = createHabitCard(habit);
+                container.appendChild(habitCard);
+            });
+            
+            // Load individual habit pages
+            habitsData.forEach(habit => {
+                loadHabitPage(habit);
+            });
+        }
+
+        function createHabitCard(habit) {
+            const div = document.createElement('div');
+            div.className = 'bg-white p-6 rounded-xl shadow-lg card-hover cursor-pointer';
+            div.onclick = () => showHabit(habit.id);
+            div.innerHTML = `
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">${habit.icon}</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Habit ${habit.id}</h3>
+                    <h4 class="text-purple-600 font-semibold mb-3">${habit.title}</h4>
+                    <p class="text-sm text-gray-600 mb-4 text-justify">${habit.concept}</p>
+                    <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium">
+                        Learn Details →
+                    </button>
+                </div>
+            `;
+            return div;
+        }
+
+        function loadHabitPage(habit) {
+            const container = document.getElementById(`habit${habit.id}Content`);
+            container.innerHTML = `
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-8">
+                        <div class="text-center mb-8">
+                            <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6">
+                                ${habit.icon}
+                            </div>
+                            <h1 class="text-3xl font-bold text-gray-800 mb-2">Habit ${habit.id}: ${habit.title}</h1>
+                            <p class="text-purple-600 font-semibold text-xl">${habit.subtitle}</p>
+                        </div>
+                        
+                        <div class="space-y-8">
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">💡 Core Concept</h2>
+                                <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify text-lg">${habit.concept}</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">📖 Detailed Explanation</h2>
+                                <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify">${habit.detail}</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">🎯 Practical Examples</h2>
+                                <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify">${habit.example}</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">🚀 Practical Tips</h2>
+                                <ul class="space-y-4 max-w-3xl mx-auto">
+                                    ${habit.tips.map(tip => `<li class="flex items-start space-x-3 text-left"><span class="text-purple-500 mt-1 text-xl">•</span><span class="text-gray-600 leading-relaxed">${tip}</span></li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-8 rounded-xl text-center max-w-3xl mx-auto">
+                                <h2 class="font-bold text-purple-800 mb-4 text-xl">✨ Key Insight</h2>
+                                <p class="text-purple-700 italic leading-relaxed text-justify text-lg">"${habit.insight}"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Show specific habit page
+        function showHabit(habitId) {
+            // Scroll to top immediately
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+            
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show specific habit section
+            document.getElementById(`habit${habitId}Section`).classList.remove('hidden');
+            
+            // Hide daily quote
+            document.getElementById('dailyQuote').classList.add('hidden');
+            
+            // Ensure scroll is at top after DOM updates
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'instant'
+                });
+            }, 10);
+        }
+
+        // Checklist functionality
+        function loadChecklist() {
+            const checklistItems = [
+                "Write my personal mission statement",
+                "Identify my 3 main life priorities",
+                "Create daily schedule aligned with my values",
+                "Practice empathic listening in conversations",
+                "Look for win-win opportunities in daily interactions",
+                "Form synergistic teams or partnerships",
+                "Create daily routine for 4 renewal dimensions",
+                "Evaluate and adjust habits weekly"
+            ];
+            
+            const container = document.getElementById('checklistContainer');
+            container.innerHTML = '';
+            
+            checklistItems.forEach((item, index) => {
+                const isChecked = localStorage.getItem(`checklist_${index}`) === 'true';
+                const div = document.createElement('div');
+                div.className = 'flex items-start space-x-4 p-3 hover:bg-gray-50 rounded-lg transition-colors';
+                div.innerHTML = `
+                    <input type="checkbox" id="check_${index}" ${isChecked ? 'checked' : ''} 
+                           class="w-5 h-5 text-purple-600 rounded focus:ring-purple-500 mt-1"
+                           onchange="updateChecklist(${index})">
+                    <label for="check_${index}" class="text-gray-700 leading-relaxed cursor-pointer ${isChecked ? 'line-through opacity-60' : ''}">${item}</label>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateChecklist(index) {
+            const checkbox = document.getElementById(`check_${index}`);
+            const label = checkbox.nextElementSibling;
+            
+            localStorage.setItem(`checklist_${index}`, checkbox.checked);
+            
+            if (checkbox.checked) {
+                label.classList.add('line-through', 'opacity-60');
+            } else {
+                label.classList.remove('line-through', 'opacity-60');
+            }
+            
+            updateProgress();
+        }
+
+        // Notes functionality
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('personalNotes');
+            if (savedNotes) {
+                document.getElementById('personalNotes').value = savedNotes;
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('personalNotes').value;
+            localStorage.setItem('personalNotes', notes);
+            
+            // Show success message
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Saved!';
+            button.classList.add('bg-green-600');
+            button.classList.remove('bg-blue-600');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('bg-green-600');
+                button.classList.add('bg-blue-600');
+            }, 2000);
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            let completedActions = 0;
+            for (let i = 0; i < 8; i++) {
+                if (localStorage.getItem(`checklist_${i}`) === 'true') {
+                    completedActions++;
+                }
+            }
+            
+            const completedHabits = habitsData.length; // All habits are available to read
+            const progressPercentage = Math.round((completedActions / 8) * 100);
+            
+            document.getElementById('completedHabits').textContent = completedHabits;
+            document.getElementById('completedActions').textContent = completedActions;
+            document.getElementById('progressPercentage').textContent = progressPercentage + '%';
+        }
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            
+            // Update header toggle
+            document.getElementById('headerDarkModeToggle').innerHTML = '<span class="text-lg">☀️</span>';
+            
+            // Update drawer toggle
+            const drawerToggle = document.getElementById('drawerDarkModeToggle');
+            const toggleTrack = document.getElementById('drawerToggleTrack');
+            const toggleThumb = document.getElementById('drawerToggleThumb');
+            
+            drawerToggle.querySelector('span').textContent = '☀️';
+            toggleTrack.classList.add('bg-purple-600');
+            toggleTrack.classList.remove('bg-gray-300');
+            toggleThumb.classList.add('translate-x-6');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97feb9945447fd9f',t:'MTc1ODAwODUyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
