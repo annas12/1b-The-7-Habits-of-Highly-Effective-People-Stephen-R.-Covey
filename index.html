@@ -186,83 +186,111 @@
         <section id="contentsSection" class="section hidden">
             <h2 class="subtitle-fluid font-bold text-gray-800 mb-8 text-center">📚 Table of Contents</h2>
             
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-lg font-semibold text-purple-600 mb-4">🏗️ Paradigms & Principles</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
-                            <span class="text-gray-700">The Power of Paradigms</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
-                            <span class="text-gray-700">Fundamental Principles</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
-                            <span class="text-gray-700">Character vs Personality Ethics</span>
-                        </li>
-                    </ul>
+            <div class="max-w-4xl mx-auto space-y-4">
+                <!-- Foundational Concepts -->
+                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center">🏗️ Foundational Concepts</h3>
+                    <div class="grid md:grid-cols-3 gap-3">
+                        <button onclick="showHabit('paradigms')" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">👁️</span>
+                                <span class="font-medium">The Power of Paradigms</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit('principles')" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">⚖️</span>
+                                <span class="font-medium">Fundamental Principles</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit('character-ethics')" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🏛️</span>
+                                <span class="font-medium">Character vs Personality Ethics</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-lg font-semibold text-blue-600 mb-4">🎯 Private Victory</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
-                            <span class="text-gray-700">Habit 1: Be Proactive</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
-                            <span class="text-gray-700">Habit 2: Begin with the End in Mind</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
-                            <span class="text-gray-700">Habit 3: Put First Things First</span>
-                        </li>
-                    </ul>
+                <!-- Private Victory -->
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center">🎯 Private Victory</h3>
+                    <div class="grid md:grid-cols-3 gap-3">
+                        <button onclick="showHabit(1)" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🎯</span>
+                                <span class="font-medium">Habit 1: Be Proactive</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit(2)" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🎪</span>
+                                <span class="font-medium">Habit 2: Begin with the End in Mind</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit(3)" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">⚖️</span>
+                                <span class="font-medium">Habit 3: Put First Things First</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-lg font-semibold text-green-600 mb-4">🤝 Public Victory</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-                            <span class="text-gray-700">Habit 4: Think Win-Win</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-                            <span class="text-gray-700">Habit 5: Seek First to Understand</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-                            <span class="text-gray-700">Habit 6: Synergize</span>
-                        </li>
-                    </ul>
+                <!-- Public Victory -->
+                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center">🤝 Public Victory</h3>
+                    <div class="grid md:grid-cols-3 gap-3">
+                        <button onclick="showHabit(4)" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🤝</span>
+                                <span class="font-medium">Habit 4: Think Win-Win</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit(5)" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">👂</span>
+                                <span class="font-medium">Habit 5: Seek First to Understand</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit(6)" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🌟</span>
+                                <span class="font-medium">Habit 6: Synergize</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-lg font-semibold text-orange-600 mb-4">🔄 Renewal</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
-                            <span class="text-gray-700">Habit 7: Sharpen the Saw</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
-                            <span class="text-gray-700">Continuous Renewal</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
-                            <span class="text-gray-700">Upward Spiral of Growth</span>
-                        </li>
-                    </ul>
+                <!-- Renewal -->
+                <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center">🔄 Renewal</h3>
+                    <div class="grid md:grid-cols-3 gap-3">
+                        <button onclick="showHabit(7)" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🔄</span>
+                                <span class="font-medium">Habit 7: Sharpen the Saw</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit('continuous-renewal')" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🌱</span>
+                                <span class="font-medium">Continuous Renewal</span>
+                            </div>
+                        </button>
+                        <button onclick="showHabit('upward-spiral')" class="bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-colors text-left">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">📈</span>
+                                <span class="font-medium">Upward Spiral of Growth</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <div class="text-center mt-8">
                 <button onclick="showSection('habits')" class="bg-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-purple-700 transition-colors shadow-lg">
-                    Explore 7 Habits ⭐
+                    Explore All Concepts ⭐
                 </button>
             </div>
         </section>
@@ -382,10 +410,91 @@
                     </button>
                     <div class="flex space-x-2">
                         <button onclick="showHabit(6)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 6</button>
-                        <button onclick="showHabit(1)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 1 →</button>
+                        <button onclick="showHabit('continuous-renewal')" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Continuous Renewal →</button>
                     </div>
                 </div>
                 <div id="habit7Content"></div>
+            </div>
+        </section>
+
+        <!-- Additional concept sections -->
+        <section id="paradigmsSection" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit('upward-spiral')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Upward Spiral</button>
+                        <button onclick="showHabit('principles')" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Principles →</button>
+                    </div>
+                </div>
+                <div id="paradigmsContent"></div>
+            </div>
+        </section>
+
+        <section id="principlesSection" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit('paradigms')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Paradigms</button>
+                        <button onclick="showHabit('character-ethics')" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Character Ethics →</button>
+                    </div>
+                </div>
+                <div id="principlesContent"></div>
+            </div>
+        </section>
+
+        <section id="character-ethicsSection" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit('principles')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Principles</button>
+                        <button onclick="showHabit(1)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 1 →</button>
+                    </div>
+                </div>
+                <div id="character-ethicsContent"></div>
+            </div>
+        </section>
+
+        <section id="continuous-renewalSection" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(7)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 7</button>
+                        <button onclick="showHabit('upward-spiral')" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Upward Spiral →</button>
+                    </div>
+                </div>
+                <div id="continuous-renewalContent"></div>
+            </div>
+        </section>
+
+        <section id="upward-spiralSection" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Back to List</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit('continuous-renewal')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Continuous Renewal</button>
+                        <button onclick="showHabit('paradigms')" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Paradigms →</button>
+                    </div>
+                </div>
+                <div id="upward-spiralContent"></div>
             </div>
         </section>
 
@@ -484,8 +593,56 @@
     </main>
 
     <script>
-        // Data for the 7 Habits
+        // Data for foundational concepts and 7 Habits
         const habitsData = [
+            {
+                id: 'paradigms',
+                title: "The Power of Paradigms",
+                subtitle: "How We See the World Shapes Our Reality",
+                icon: "👁️",
+                concept: "Paradigms are the mental maps we use to understand and navigate the world around us.",
+                detail: "A paradigm is a model, theory, perception, assumption, or frame of reference. It's the way we see the world - not in terms of our visual sense of sight, but in terms of perceiving, understanding, and interpreting. Paradigms are powerful because they create the lens through which we see the world. If you want small changes in your life, work on your attitude. But if you want big and primary changes, work on your paradigm.",
+                example: "Example: Two people can look at the same situation and see completely different things. A manager might see an employee's mistake as incompetence, while another sees it as a learning opportunity. The same employee, different paradigms, different responses. When we shift our paradigm, we literally change how we experience reality.",
+                tips: [
+                    "Question your assumptions - ask 'What if the opposite were true?'",
+                    "Seek to understand different perspectives before judging",
+                    "Notice when you're making assumptions about people's motives",
+                    "Practice seeing situations from multiple angles before reacting"
+                ],
+                insight: "We see the world, not as it is, but as we are - or as we are conditioned to see it. The way we see the problem is the problem."
+            },
+            {
+                id: 'principles',
+                title: "Fundamental Principles",
+                subtitle: "Universal Laws That Govern Human Effectiveness",
+                icon: "⚖️",
+                concept: "Principles are natural laws that are universal, timeless, and self-evident.",
+                detail: "Principles are not practices or values. Practices are specific activities that work in specific circumstances. Values are maps that guide our behavior. But principles are the territory itself - they're natural laws that operate regardless of our awareness of them. Examples include fairness, integrity, honesty, human dignity, service, quality, potential, growth, patience, and encouragement.",
+                example: "Example: The principle of fairness operates whether we believe in it or not. If we treat people unfairly, there will be consequences in the relationship. The principle of growth means that all living things must grow or die - this applies to individuals, relationships, and organizations. You can't violate principles and expect to succeed long-term.",
+                tips: [
+                    "Identify the principles behind successful practices you observe",
+                    "When facing ethical dilemmas, ask 'What principle should guide this decision?'",
+                    "Study timeless wisdom from various cultures - notice common principles",
+                    "Align your goals and methods with universal principles"
+                ],
+                insight: "Principles are like lighthouses. They are natural laws that cannot be broken. We can only break ourselves against them."
+            },
+            {
+                id: 'character-ethics',
+                title: "Character Ethics vs Personality Ethics",
+                subtitle: "The Foundation of True Success",
+                icon: "🏛️",
+                concept: "Character Ethics focuses on fundamental traits like integrity and courage, while Personality Ethics focuses on techniques and quick fixes.",
+                detail: "For the first 150 years of American history, success literature focused on Character Ethics - things like integrity, humility, fidelity, temperance, courage, justice, patience, industry, simplicity, and modesty. After World War I, the focus shifted to Personality Ethics - personality traits, skills, techniques, and quick fixes. Character Ethics is the foundation; Personality Ethics is secondary.",
+                example: "Example: Character Ethics approach to leadership: Develop integrity, listen with empathy, serve others' growth. Personality Ethics approach: Learn persuasion techniques, dress for success, use the right body language. Both have their place, but without character foundation, personality techniques become manipulative and unsustainable.",
+                tips: [
+                    "Focus on being trustworthy rather than just appearing trustworthy",
+                    "Develop your character in private - what you do when no one is watching",
+                    "Ask 'What kind of person do I need to become?' not just 'What do I need to do?'",
+                    "Invest time in developing virtues like patience, kindness, and humility"
+                ],
+                insight: "What we are communicates far more eloquently than anything we say or do. Character is the foundation upon which all other success is built."
+            },
             {
                 id: 1,
                 title: "Be Proactive",
@@ -597,6 +754,38 @@
                     "Evaluate and adjust your renewal program monthly"
                 ],
                 insight: "Sharpen the Saw means preserving and enhancing the greatest asset you have - you. It means having a balanced program for self-renewal in the four areas of your life."
+            },
+            {
+                id: 'continuous-renewal',
+                title: "Continuous Renewal",
+                subtitle: "The Process of Ongoing Growth and Development",
+                icon: "🌱",
+                concept: "Renewal is the principle and process that empowers us to move on an upward spiral of growth and change.",
+                detail: "Continuous renewal is not just about Habit 7 - it's about applying all seven habits in an ongoing cycle. It's about constantly improving and refining our understanding and application of these principles. This creates an upward spiral of learning, committing, and doing on increasingly higher planes. Each time we go through the cycle, we do it at a higher level.",
+                example: "Example: After practicing the 7 habits for a year, you revisit them with deeper understanding. Your proactivity becomes more sophisticated, your listening skills more refined, your synergy more creative. You might start mentoring others, which deepens your own understanding. The renewal process never ends - there's always a higher level of effectiveness to achieve.",
+                tips: [
+                    "Regularly review and assess your progress in all seven habits",
+                    "Seek feedback from trusted friends and mentors about your growth",
+                    "Set new challenges that require you to apply the habits at higher levels",
+                    "Teach or mentor others - this deepens your own understanding"
+                ],
+                insight: "The more we develop our capacities to serve, the greater our ability to serve becomes. This is the essence of continuous renewal and the upward spiral of growth."
+            },
+            {
+                id: 'upward-spiral',
+                title: "Upward Spiral of Growth",
+                subtitle: "Learn, Commit, Do - At Higher and Higher Levels",
+                icon: "📈",
+                concept: "Growth and change involve a continuous cycle of learning, committing, and doing at progressively higher levels.",
+                detail: "The upward spiral represents the continuous cycle of growth that occurs when we consistently apply the seven habits. It involves three elements: Learn (gaining knowledge and understanding), Commit (making choices and decisions), and Do (taking action and gaining experience). Each cycle through these three elements takes us to a higher level of understanding and effectiveness.",
+                example: "Example: First level - Learn about empathic listening, commit to trying it, do it awkwardly. Second level - Learn from your mistakes, commit to improving, do it more naturally. Third level - Learn advanced techniques, commit to mastering them, do it so well you can teach others. Each cycle builds on the previous one, creating exponential growth.",
+                tips: [
+                    "Embrace the learning process - see mistakes as opportunities to grow",
+                    "Make specific commitments to practice new behaviors",
+                    "Take action consistently, even when it feels uncomfortable",
+                    "Celebrate progress and use it as motivation for the next level"
+                ],
+                insight: "To make meaningful progress, we must learn, commit, and do - learn, commit, and do - and learn, commit, and do again. The upward spiral of growth is the path to continuous improvement and increasing effectiveness."
             }
         ];
 
@@ -792,7 +981,20 @@
         }
 
         function loadHabitPage(habit) {
-            const container = document.getElementById(`habit${habit.id}Content`);
+            let containerId;
+            let title;
+            
+            if (typeof habit.id === 'string') {
+                containerId = `${habit.id}Content`;
+                title = habit.title;
+            } else {
+                containerId = `habit${habit.id}Content`;
+                title = `Habit ${habit.id}: ${habit.title}`;
+            }
+            
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
             container.innerHTML = `
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div class="p-8">
@@ -800,7 +1002,7 @@
                             <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6">
                                 ${habit.icon}
                             </div>
-                            <h1 class="text-3xl font-bold text-gray-800 mb-2">Habit ${habit.id}: ${habit.title}</h1>
+                            <h1 class="text-3xl font-bold text-gray-800 mb-2">${title}</h1>
                             <p class="text-purple-600 font-semibold text-xl">${habit.subtitle}</p>
                         </div>
                         
@@ -852,7 +1054,14 @@
             });
             
             // Show specific habit section
-            document.getElementById(`habit${habitId}Section`).classList.remove('hidden');
+            let sectionId;
+            if (typeof habitId === 'string') {
+                sectionId = `${habitId}Section`;
+            } else {
+                sectionId = `habit${habitId}Section`;
+            }
+            
+            document.getElementById(sectionId).classList.remove('hidden');
             
             // Hide daily quote
             document.getElementById('dailyQuote').classList.add('hidden');
@@ -973,5 +1182,5 @@
             toggleThumb.classList.add('translate-x-6');
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97feb9945447fd9f',t:'MTc1ODAwODUyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fed048239b6033',t:'MTc1ODAwOTQ1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
